@@ -1,0 +1,29 @@
+# UfoMakefile — UFO OS Build System
+BOOT = boot
+KERNEL = kernel
+SYSTEM = system
+USER = user
+BUILD = build
+ISO = ufoos.iso
+KERNEL_BIN = $(BUILD)/kernel.bin
+
+all: bootloader kernel system user iso
+
+bootloader:
+	$(MAKE) -C $(BOOT)
+
+kernel:
+	$(MAKE) -C $(KERNEL)
+
+system:
+	$(MAKE) -C $(SYSTEM)
+
+user:
+	$(MAKE) -C $(USER)
+
+iso:
+	grub-mkrescue -o $(ISO) iso/
+
+clean:
+	rm -rf $(BUILD) *.iso
+	find . -name "*.o" -delete
