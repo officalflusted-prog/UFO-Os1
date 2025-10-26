@@ -1,6 +1,4 @@
-// UFO OS Remote Module
-// Future: Handle drivers, system calls, etc.
-
-void remote_init() {
-    // Placeholder for advanced features
+// kernel_remote.c — simple placeholder
+void remote_init(void) {
+    // For now, do nothing. Later insert drivers / syscalls.
 }
