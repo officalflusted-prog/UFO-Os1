@@ -1,0 +1,28 @@
+#include <stdint.h>
+#include "storage.h"
+
+// forward to VGA printing utilities; if you don't have one, use a minimal one:
+extern void vga_puts(const char* s);
+
+void storage_test(void) {
+    static uint8_t buf[512];
+    ata_init();
+    int r = ata_read_sector_lba28(0, buf);
+    if (r != 0) {
+        vga_puts("ATA read failed\n");
+        return;
+    }
+    vga_puts("Sector 0 hex:\n");
+    for (int i = 0; i < 512; ++i) {
+        // print bytes as hex, simple 2-digit (you should implement vga_puthex)
+        // for brevity, we print ASCII where printable
+        char c = buf[i];
+        if (c >= 32 && c <= 126) {
+            char s[2] = {c, 0};
+            vga_puts(s);
+        } else {
+            vga_puts(".");
+        }
+        if ((i & 31) == 31) vga_puts("\n");
+    }
+}
